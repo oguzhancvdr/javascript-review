@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
+        </script>
+    <title>JQuery Events</title>
+    <style>
+        .changeColor{
+            color:red;
+            font-size: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <p id="p1">JQuery click event</p>
+    <p id="p2">JQuery click event</p>
+    <p class="par">JQuery click event</p>
+    <p class="par">JQuery click event</p>
+
+    <form>
+        <p>Name: <input class="control" type="text" /></p>
+        <p>Hobies: 
+            <select class="control">
+                <option value="spor" >Spor</option>
+                <option value="gaming" selected>Gaming</option>
+            </select>
+        </p>
+    </form>
+
+
+    <script>
+
+        // click event
+        $(document).ready(function () {
+            $('.par').click(function(){
+                // this represents p1 element that is clicked element
+                $(this).toggleClass("changeColor")
+            })
+        })
+
+        // same as above 
+        // $(function () {
+        //     console.log("document ready")
+        // })
+
+        // change event
+        $(document).ready(function(){
+            $('.control').change(function(){
+                const value = $(this).val();
+                console.log(`value`, value)
+            })
+        })
+    </script>
+</body>
+
+</html>
