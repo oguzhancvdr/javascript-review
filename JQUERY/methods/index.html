@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
+        </script>
+    <title>JQuery Methods</title>
+    <style>
+        .highlight{
+            background-color: yellow;
+            display: none;
+        }
+        .green{
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>JQuery helper methods</h1>
+
+    <ul>
+        <li>JQuery selectors</li>
+        <li>JQuery methods</li>
+        <li>JQuery animations</li>
+    </ul>
+    <img src="../../DOM/slider-app/img/bmw.jpg" width="305px" />
+
+    <input id="name" type="text" placeholder="fullname" />
+    <input id="surname" type="text" placeholder="surname" class="green"/>
+    <button id="btn" onclick="nameSurname();">Save</button>
+
+
+    <script>
+        // console.log(`h1`, $('h1').text())
+        // console.log(`ul`, $('ul').text())
+        // console.log(`ul > li`, $('ul li').text())
+
+        $('h1').text("Javascript")
+        console.log($('input').val())
+        console.log($('#name').val("Obione"))
+        console.log($('#surname').val("Kenobi"))
+
+        $('img').attr("width", "407")
+
+        function nameSurname(){
+            const name = $('#name').val()
+            const surname = $('#surname').val()
+
+            console.log(`Fullname and Surname :>>`, name + " " + surname)
+            $('#name').toggleClass("highlight")
+            $('#surname').removeClass("green")
+        }
+    </script>
+    
+</body>
+</html>
