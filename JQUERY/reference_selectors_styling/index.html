@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
+        </script>
+    <title>jquery</title>
+</head>
+
+<body>
+    <h3 id="header">JQuery Lessons</h3>
+    <ul id="list">
+        <li class="item">JQuery reference</li>
+        <li>Selectors <a href="#">Link</a></li>
+        <li class="item">JQuery Plugins</li>
+    </ul>
+
+    <script>
+        /**
+         * console.log(`ul`, $("#list"))
+         * console.log(`h3`, $("h3"))
+         * console.log(`li`, $("li"))
+         * console.log(`itemClasses`, $(".item"))
+         * console.log(`nestedAnchor`, $('#list a'))
+        */
+        const styles = {
+            header: {
+                color: 'red',
+                backgroundColor: 'wheat',
+            },
+            link: {
+                textDecoration: 'none',
+            },
+            items: {
+                border: "1px solid blue",
+                backgroundColor: "violet",
+                color: "#fff"
+            }
+        }
+
+        $('#header').css(styles.header)
+        $('#list a').css(styles.link)
+        
+        // with pure javascript
+        // const list = document.querySelectorAll("li");
+        // list.forEach(item => item.style.color = "red")
+        
+        // with JQuery
+        $('li').css(styles.items)
+
+
+    </script>
+</body>
+
+</html>
