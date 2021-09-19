@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
+        </script>
+    <title>JQuery Effects</title>
+    <style></style>
+</head>
+
+<body>
+    <p>JQuery Hide and Show Effects</p>
+    <button id="hide">hide</button>
+    <button id="show">show</button>
+    <button id="toggle">toggle</button>
+    <hr />
+
+    <p id="slider">JQuery Slide Effects</p>
+    <button id="slideUp">Slide Up</button>
+    <button id="slideDown">Slide Down</button>
+    <button id="slideToggle">toggle</button>
+    <hr />
+
+    <p id="fade">JQuery Fade Effects</p>
+    <button id="fadeIn">Fade In</button>
+    <button id="fadeOut">Fade Out</button>
+    <button id="fadeTo">Fade To</button>
+    <button id="fadeToggle">toggle</button>
+    <hr />
+
+
+    <script>
+        $(document).ready(function () {
+            $('#hide').click(function () {
+                $("p").hide(3000);
+            })
+            $('#show').click(function () {
+                $("p").show("slow", function () {
+                    alert("Paragraph has been showed!")
+                });
+            })
+            $('#toggle').click(function () {
+                $("p").toggle("fast");
+            })
+        })
+
+        // slide up and down effects
+        $(document).ready(function () {
+            $('#slideUp').click(function () {
+                $("#slider").slideUp(2000);
+            })
+            $('#slideDown').click(function () {
+                $("#slider").slideDown("fast", function () {
+                    alert("Paragraph has been showed!")
+                });
+            })
+            $('#slideToggle').click(function () {
+                $("#slider").slideToggle("slow");
+            })
+        })
+
+        // fade in and out effects
+        $(document).ready(function () {
+            $('#fadeIn').click(function () {
+                $("#fade").fadeIn(2000);
+            })
+            $('#fadeOut').click(function () {
+                $("#fade").fadeOut("slow", function () {
+                    alert("Paragraph has been showed!")
+                });
+            })
+            $('#fadeTo').click(function () {
+                $("#fade").fadeTo("slow", 0.2);
+            })
+            $('#fadeToggle').click(function () {
+                $("#fade").fadeToggle("slow");
+            })
+        })
+
+    </script>
+</body>
+
+</html>
