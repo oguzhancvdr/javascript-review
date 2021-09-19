@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
+        </script>
+    <title>JQuery Effects</title>
+    <style>
+        #box {
+            position: absolute;
+            top: 50px;
+            left: 10px;
+            width: 200px;
+            height: 200px;
+            background-color: blue;
+ 
+        }
+        #box > span {
+            opacity: 0;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="animate">Animate</button>
+    <div id="box"><span>Hello</span></div>
+
+
+
+
+
+    <script>
+        $(document).ready(function () {
+            $('#animate').click(function () {
+                const box =  $('#box');
+                const span = $('span');
+
+                box.animate({
+                    left: "200px",
+                    width: "250px",
+                    height: "250px"
+                },
+                    3000,
+                    function () {
+                        alert("Animation has been successfully worked!")
+                    }
+                )
+
+                span.animate({
+                    opacity: 1,
+                    fontSize: "2rem",
+                }, 3000)
+            })
+        })
+    </script>
+</body>
+
+</html>
