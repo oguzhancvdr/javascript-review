@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
+        </script>
+    <title>Form Validation with JQuery</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-size: 180%;
+        }
+
+        #wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        input {
+            padding: 15px;
+            font-size: 25px;
+            border-radius: 5px;
+            border: 1px solid gray;
+            width: 350px;
+        }
+
+        label {
+            display: inline-block;
+            width: 222px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+        }
+
+        #error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="error"></div>
+        <div class="form-group">
+            <label for="email">Email: </label>
+            <input type="text" name="email" id="email" placeholder="Your email" />
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone: </label>
+            <input type="text" name="phone" id="phone" placeholder="Your phone" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password: </label>
+            <input type="password" name="password" id="password" placeholder="Your password" />
+        </div>
+        <div class="form-group">
+            <label for="confirmPassword">Confirm password:</label>
+            <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm your password" />
+        </div>
+        <button id="btn">Save</button>
+    </div>
+
+
+    <script>
+        $(function () {
+            function isEmail(email) {
+                let pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                return pattern.test(email)
+            }
+            $('#btn').click(function () {
+                var errorMessage = "";
+                $("#error").html("")
+
+                if ($('#email').val() === "") {
+                    errorMessage += "<p> Email is required</p>";
+                }
+                if (isEmail($('#email').val()) == false) {
+                    errorMessage += "<p>Your email is invalid</p>"
+                }
+                if ($.isNumeric($('#phone').val()) == false) {
+                    errorMessage += "<p> your phone is invalid</p>";
+                }
+                if ($('#password').val() === "") {
+                    errorMessage += "<p> password is required !</p>";
+                }
+                if ($('#password').val() !== $('#confirmPassword').val()) {
+                    errorMessage += "<p> password should be matched! !</p>";
+                }
+                if (errorMessage !== "") {
+                    $('#error').html(errorMessage)
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>
