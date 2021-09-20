@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
+        </script>
+    <title>Message Box</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #message-box {
+            background-color: green;
+            text-align: center;
+            color: #ffffff;
+
+        }
+
+        #header {
+            cursor: pointer;
+            height: 20px;
+            padding: 10px;
+            border-bottom: 1px solid #fff;
+
+        }
+
+        #content {
+            height: 200px;
+            padding: 10px;
+            display: none;
+        }
+
+        #close {
+            float: right;
+        }
+
+        #close:hover {
+            color: red;
+        }
+    </style>
+
+    <script>
+        $(function () {
+            $('#header').click(function () {
+                $('#content').toggle("slow")
+            })
+            $('#close').click(function () {
+                $('#message-box').hide("slow")
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <div id="message-box">
+        <div id="header">
+            <span id="close">X</span>
+            You have a message !
+        </div>
+        <div id="content">
+            <p>I missed you !</p>
+        </div>
+    </div>
+</body>
+
+</html>
