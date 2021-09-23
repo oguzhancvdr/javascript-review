@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arrow func</title>
+</head>
+<body>
+    <h3>Arrow func</h3>
+
+
+    <script>
+        // Arrow functions
+        let welcomeES5 = function(){
+            console.log("Hello from ES5");
+        }
+        welcomeES5();
+
+        //ES6
+        let welcomeES6 = () => {
+            console.log("Hello from ES6");
+        }
+        welcomeES6();
+
+        // with params
+        let multipyES5 = function(x,y){
+            return x * y;
+        }
+
+        console.log(multipyES5(5,7));
+
+        // ES6
+        // with paranthesies
+        let multipyES6_ = (x,y) => {
+            return x * y;
+        }
+        // without paranthesies
+        let multipyES6 = (x,y) => x * y;
+
+       console.log(multipyES6(5,6)); 
+
+       // ES5 
+       let splitES5 = function(text){
+           return text.split(' ')
+       }
+       console.log(splitES5('Modern Javascript Techniques'));
+
+       //ES&
+       let splitES6 = text => text.split(' ');
+       console.log(splitES6('Modern Javascript Techniques with ES6'));
+
+       // ES5 Object literals
+       let productES5 = function(id,name){
+           return {
+               id : id,
+               name : name,
+           }
+       }
+       console.log(productES5(1, 'samsung S8'));
+
+       // ES6
+       let productES6 = (id, name) => (
+           {
+               id,
+               name,
+           }
+       )
+       console.log(productES6(1, "iphone 7"));
+
+       const phones = [
+           {name: 'iphone 8', price: 6000},
+           {name: 'samsung 8', price: 5000},
+           {name: 'xioami 8', price: 4000},
+           {name: 'casper 8', price: 3000},
+        ]
+
+        // ES5 map
+
+        let priceES5 = phones.map(function(phone){
+            return phone.price;
+        })
+        console.log(priceES5);
+
+        // ES6 map
+        let priceES6 = phones.map(phone => phone.price);
+        console.log(priceES6);
+
+        // ES5 filtering
+        const arr = [1,2,44,55,66,77,88,56,12,43, 56, 68]
+        let evenES5= arr.filter(function(a){
+            return a % 2 == 0;
+        })
+        console.log(evenES5);
+
+        // ES6 filtering
+        let oddES6 = arr.filter(a => a % 2 !== 0);
+        console.log(oddES6);
+
+    </script>
+</body>
+</html>
