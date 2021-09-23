@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6-Array usage</title>
+    <style>
+        .wrapper {
+            display: flex;
+        }
+
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: gray;
+            margin: 10px;
+            color: white;
+            font-size: larger;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        #blue {
+            background-color: steelblue;
+        }
+
+        #yellow {
+            background-color: yellow;
+        }
+
+        #red {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h4>ES6-Array usage</h4>
+    <div class="wrapper">
+        <div class="box" id="blue">
+            Blue
+        </div>
+        <div class="box" id="yellow">
+            Yellow
+        </div>
+        <div class="box" id="red">
+            Red
+        </div>
+    </div>
+    <script>
+        // Arrays in ES6
+        const boxes = document.querySelectorAll('.box');
+
+        let boxesES5 = Array.prototype.slice.call(boxes);
+
+        // ES5
+        // boxesES5.forEach(function (box) {
+        //     box.style.backgroundColor = 'green';
+        // });
+
+        // ES6
+        // Array.from(boxes).forEach(box => {
+        //     box.style.backgroundColor = "blue"
+        // })
+
+
+        // ES5 
+        /**
+        for (let i = 0; i < boxesES5.length; i++) {
+            console.log(boxesES5[i]);
+            if (boxesES5[i].id == "blue") {
+                continue;
+            }
+            boxesES5[i].textContent = "I'm changed"
+            // boxesES5[i].style.backgroundColor = "red"
+        }
+        */
+
+        // ES6
+        var boxesES6 = Array.from(boxes);
+        for (let box of boxesES6) {
+            if (box.id == 'blue') {
+                continue
+            }
+            box.textContent = "I'm changed"
+            box.style.backgroundColor = "blue"
+        }
+
+        // from
+        let arr = Array.from('Modern Javascript')
+        console.log(`arr`, arr)
+
+        const products = [
+            { name: 'Samsung S8', price: 4500 },
+            { name: 'Iphone 12', price: 25000 },
+            { name: 'Xioami Redmi', price: 3500 },
+            { name: 'Huawei Mate Pro', price: 5000 },
+            { name: 'NOKIA', price: 2500 },
+        ]
+
+        console.log(Array.from(products, prd => prd.name));
+        console.log(products.find(prd => prd.name === "Samsung S8"));
+        console.log(products.filter(prd => prd.name === "Samsung S8"));
+        console.log(products.findIndex(prd => prd.price < 5000));
+
+        let numbers = ['a', 'b', 'c'];
+
+        let entries = numbers.entries();
+        for (let i of entries) {
+            console.log(`i`, i)
+        }
+
+        let keys = numbers.keys();
+        for (let i of keys) {
+            console.log(`key`, i)
+        }
+
+        let values = numbers.values();
+        for (let i of values) {
+            console.log(`values`, i)
+        }
+
+        console.log(boxesES5);
+        console.log(boxes);
+    </script>
+</body>
+
+</html>
