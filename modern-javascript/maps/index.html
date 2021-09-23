@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maps</title>
+</head>
+
+<body>
+  <h4>Maps: key/value pairs (collections)</h4>
+
+  <script>
+    let val;
+
+    const numbers = new Map();
+
+    numbers.set(1, 'one')
+    numbers.set("2", 'two')
+    numbers.set(3, 'three')
+    numbers.set("four", 4)
+
+    val = numbers;
+    val = numbers.get(1);
+    val = numbers.get('four');
+    val = numbers.size;
+    val = numbers.delete("four")
+    val = numbers.has("four");
+    // numbers.clear();
+
+    console.log(numbers);
+    console.log(val);
+
+    for (var [key, value] of numbers) {
+      console.log(key + ' = ' + value);
+    }
+
+    for (var [key, value] of numbers.entries()) {
+      console.log(key + ' = ' + value);
+    }
+
+    for (var key of numbers.keys()) {
+      console.log(key);
+    }
+
+    numbers.forEach(function (key, value) {
+      console.log(key + ' = ' + value);
+    })
+
+    var first = new Map(
+      [[1, 'one'],
+      [2, 'two'],
+      [3, 'three'],]
+    );
+
+    var second = new Map(
+      [[4, 'four'],
+      [5, 'five'],
+      [6, 'six'],]
+    );
+
+    var merged = new Map([...first, ...second])
+    console.log(`merged`, merged)
+  </script>
+</body>
+
+</html>
