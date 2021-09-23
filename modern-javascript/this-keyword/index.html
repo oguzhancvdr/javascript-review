@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>This keyword</title>
+</head>
+<body>
+    <h3>This keyword</h3>
+
+    <script>
+
+        // ES5
+        let list = {
+            category : 'phone',
+            names: ['Iphone 8', 'Samsung s9', 'Xioami Mi'],
+            call : function(){
+                var self = this;
+                self.names.map(function(name){
+                    console.log(`${self.category} : ${name}`);
+                })
+            }
+        }
+
+        list.call();
+        console.log("******************************************************");
+
+        // ES6
+        let listES6 = {
+            category : 'phone',
+            names: ['Iphone 8', 'Samsung s9', 'Xioami Mi'],
+            call : function(){
+                this.names.map((name) => {
+                    return console.log(`${this.category} : ${name}`);
+                })
+            }
+        }
+        listES6.call();
+        console.log("******************************************************");
+
+        // ES5
+        function Game(){
+            this.live = 0;
+            this.addLive = function(){
+                var self = this;
+                self.OneUp = setInterval(function(){
+                    console.log(++self.live);
+                }, 1000)
+            }
+        }
+        let player = new Game();
+        // player.addLive();
+
+        // ES6
+        function Game(){
+            this.live = 0;
+            this.addLive = function(){
+                this.OneUp = setInterval(() => {
+                    console.log(++this.live);
+                }, 1000)
+            }
+        }
+        let player1 = new Game();
+        // player1.addLive();
+
+    </script>
+</body>
+</html>
