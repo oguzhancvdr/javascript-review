@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sub classes</title>
+</head>
+
+<body>
+  <h4>Sub classes</h4>
+  <script>
+    // ES5
+
+    function PersonES5(name, surname){
+      this.name = name;
+      this.surname = surname;
+    }
+
+    PersonES5.prototype.sayHi = function(){
+      return `Hello I'm ${this.name} ${this.surname}`
+    }
+
+    function CustomES5(name, surname, phone, username){
+
+      // taking name and surname from PersonES5 constructor
+      PersonES5.call(this, name, surname);
+      this.username = username;
+      this.phone = phone;
+
+    }
+
+    CustomES5.prototype = Object.create(PersonES5.prototype);
+    // CustomES5.prototype.constructor = CustomES5;
+
+    let customer = new CustomES5('ice', 'obi', '1234567890', 'iceobi')
+
+    console.log(customer.sayHi());
+    console.log(customer);
+
+    // ES6
+    class PersonES6{
+      constructor(name, surname){
+        this.name = name;
+        this.surname = surname;
+
+      }
+      sayHi(){
+        return `Hello I'm ${this.name} ${this.surname}`;
+      }
+    }
+
+    class CustomerES6 extends PersonES6{
+      constructor(name,surname, phone, username){
+        super(name,surname);
+        this.phone = phone;
+        this.username = username;
+      }
+
+      static getTotal(){
+        return 1000;
+      }
+    }
+
+    let customerES6 = new CustomerES6('obi', 'one', "123456789", 'obione')
+    
+    console.log(customerES6);
+    console.log(customerES6.sayHi());
+    console.log(CustomerES6.getTotal());
+  </script>
+</body>
+
+</html>
