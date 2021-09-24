@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <title>AJAX</title>
+  <style>
+    #loading {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <h3 class="text-center">Ajax & XHR Object</h3>
+  <div class="container mt-3 text-center">
+    <div class="col">
+      <div class="col">
+        <button id="getEmployee" class="btn btn-primary">Get Employee</button>
+        <div id="loading">
+          <img src="assets/gif/loading.gif" alt="loading_gif" width="150px" />
+        </div>
+      </div>
+      <table class=" table table-bordered table-striped mt-3">
+        <thead>
+          <tr>
+            <td>Name</td>
+            <td>Surname</td>
+            <td>Age</td>
+            <td>Retired</td>
+          </tr>
+        </thead>
+        <tbody id="employees">
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+  <script>
+    var xhr = new XMLHttpRequest();
+
+    /**
+     * xhr.readyState:
+     * 0: request not initialized
+     * 1: server connection established
+     * 2: request received
+     * 3: processing request
+     * 4: request finished and response is ready
+    */
+
+    /**
+     * xhr.status:
+     * 200: "OK"
+     * 403: "Forbidden"
+     * 404: "Not found"
+    */
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          console.log(xhr.responseText);
+        } else if (xhr.status === 404) {
+          console.log('Page is not found');
+        }
+      }
+    }
+
+    // second this line is executed when you uwant to show loading spinner
+    xhr.onprogress = function () {
+      console.log("on progressing...");
+    }
+
+    // third. true means requests are async and bestpractice
+    xhr.open('GET', 'msg.txt', true); xhr.send();
+
+    // first
+    console.log('hello');
+
+    document.querySelector('#getEmployee').addEventListener('click', loadEmployee);
+
+    function loadEmployee() {
+      const loadImg = document.querySelector('#loading');
+      loadImg.style.display = "block"
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', 'employees.json', true);
+
+      setTimeout(() => {
+        xhr.onload = function () {
+          loadImg.style.display = "none"
+          if (this.status === 200) {
+            let employees = JSON.parse(this.responseText)['employees'];
+            let html = "";
+            employees.forEach((element, i) => {
+              html += `<tr key=${i}>
+                          <td>${element.firstName}</td>
+                          <td>${element.lastName}</td>
+                          <td>${element.age}</td>
+                          <td>${element.retired ? "retired" : 'not retired'}</td>
+                       </tr>
+                      `
+            })
+
+            document.querySelector('#employees').innerHTML = html;
+          }
+        }
+        xhr.send();
+      }, 1500)
+
+    }
+
+  </script>
+</body>
+
+</html>
