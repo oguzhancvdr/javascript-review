@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise Practice</title>
+</head>
+
+<body>
+  <h4>Promise Practice</h4>
+
+
+
+
+  <script>
+    /*    
+      const prom = new Promise(function (resolve, reject) {
+        if (true) {
+          resolve('Success')
+        } else {
+          reject('Failure')
+        }
+      })
+
+      prom.then(function (data) {
+        console.log(data);
+      }).catch(function(err){
+        console.log(err);
+      })   
+    */
+    /*
+      const prom = new Promise(function (resolve, reject) {
+        setTimeout(() => {
+          resolve(5)
+        }, 1000)
+      })
+      prom.then(num => {
+        console.log(num);
+        return num * num;
+      }).then(num => {
+        console.log(num);
+        return num * num
+      }).then(num => {
+        console.log(num);
+      })    
+    */
+
+    const isMomHappy = true;
+
+    const willGetNewPhone = new Promise((resolve, reject) => {
+      if (isMomHappy) {
+        const phone = {
+          name: 'IPhone 13',
+          price: 30000,
+          color: ' Space Gray'
+        }
+        resolve(phone)
+      } else {
+        const err = new Error('Mom is not happy');
+        reject(err);
+      }
+    })
+
+    const showToFriends = function(phone){
+      const message = "Hey friends this is my new Phone! " + phone.name;
+      return Promise.resolve(message);
+    }
+
+    const askMom = function(){
+      willGetNewPhone
+      .then(showToFriends)
+      .then(message => console.log(message))
+      .catch(err => {
+        console.log(err);
+      })
+    }
+
+    askMom();
+
+
+  </script>
+</body>
+
+</html>
