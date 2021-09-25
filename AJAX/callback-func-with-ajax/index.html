@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Callback functions with AJAX</title>
+</head>
+
+<body>
+  <h3> Callback functions with AJAX </h3>
+
+  <script>
+    const products = [
+      { id: 1, name: 'Samsung s9', price: 8000 },
+      { id: 2, name: 'Iphone 12', price: 20000 },
+      { id: 3, name: 'Huawei Mate Pro', price: 6000 },
+      { id: 4, name: 'Xioami Red Mi', price: 3000 },
+    ];
+
+    let isAdded = false;
+
+    function addProduct(prd, callback) {
+      if (isAdded) {
+        setTimeout(() => {
+          products.push(prd);
+          callback(null, prd);
+        }, 2000)
+      } else {
+        callback("500", null)
+      }
+    }
+
+    function getProducts() {
+      setTimeout(() => {
+        products.forEach(p => {
+          console.log(`product`, p.name)
+        })
+      }, 1500)
+    }
+
+    addProduct({ id: 5, name: 'Vestel', price: 2000 },
+      function (err, data) {
+        if (err) {
+          console.log('error : ', err);
+        } else {
+          console.log(data);
+        }
+      });
+  </script>
+</body>
+
+</html>
