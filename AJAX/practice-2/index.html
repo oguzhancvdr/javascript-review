@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XMLHttpRequest & Promise</title>
+</head>
+
+<body>
+  <h3>XMLHttpRequest & Promise</h3>
+  <div id="users"></div>
+
+  <script>
+    let myObj = {
+      method: 'GET',
+      url: 'https://randomuser.me/api/?results=5',
+    }
+
+    let request = obj => {
+      return new Promise((resolve, reject) => {
+        let xhr = new XMLHttpRequest();
+        xhr.open(obj.method, obj.url, true);
+
+        if (xhr.headers) {
+          Object.keys[obj.headers].forEach(key => {
+            xhr.setRequestHeader(key, obj.headers[key]);
+          })
+        }
+
+        xhr.onload = () => {
+          if ((xhr.status >= 200 && xhr.status < 300) && xhr.readyState === 4) {
+            resolve(xhr.response)
+          } else {
+            reject(xhr.statusText)
+          }
+        }
+
+        xhr.onerror = () => {
+          reject(xhr.statusText)
+        }
+
+        xhr.send()
+      })
+    }
+
+    let buildHtml = function(data){
+      let users = JSON.parse(data);
+      let html = "";
+
+      users.results.forEach(user => {
+        html += `
+         <div key="${user.id.name + user.id.value}">
+          <img src="${user.picture.medium}" alt="user_picture" />
+          <p>Full name: ${user.name.title}. ${user.name.first} ${user.name.last}</p>
+          <p>Age: ${user?.age ? user.age : "-"}</p>
+          <p>Email: ${user.email}</p>
+          <p>Phone: ${user.phone}</p>
+          <p>Adress: ${user.location.city}/${user.location.state}, ${user.location.postcode}</p>
+         </div>
+        `;
+      })
+
+      document.getElementById('users').innerHTML = html;
+
+      return Promise.resolve("Html is loaded");
+
+    }
+    request(myObj)
+      .then(buildHtml)
+      .then(msg => console.log(msg))
+      .catch(err => console.log(err))
+
+  </script>
+
+</body>
+
+</html>
