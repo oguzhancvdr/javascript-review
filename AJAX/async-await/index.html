@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Async-await</title>
+</head>
+
+<body>
+  <h1>Async-await</h1>
+  
+  <script>
+    /*
+      async function fn() {
+        return 'hello';
+      }
+    
+      fn().then(res => console.log(res));
+    */
+
+    var hasError = false; // change value to true to see error stuation
+    function getCategory() {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if(hasError){
+            reject('Something has gone wrong.')
+          }else{
+            resolve('phone')
+          }            
+        }, 1000)
+      })
+    }
+
+    function getProducts(category) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+           if (hasError) {
+            reject('Something has gone wrong.')
+          } else {
+            resolve(`5 products in ${category}`)
+          }
+        }, 1000)
+      })
+    }
+
+    getCategory()
+    .then(getProducts)
+    .then(res => console.log("then-catch : ", res))
+    .catch(err => console.log("then-catch-err: ", err))
+    .finally(() => console.log("I always run wheater code has error or success :)"))
+
+    async function getProduct() {
+      try {
+        const categoryInfo = await getCategory();
+        const result = await getProducts(categoryInfo);        
+        console.log("async-await :", result);        
+      } catch (error) {
+        console.log("async-await-err", error);
+      } finally{
+        console.log("I always run wheater code has error or success :)");
+      }
+    }
+
+    getProduct();
+  </script>
+
+</body>
+
+</html>
