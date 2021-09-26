@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module Pattern</title>
+</head>
+
+<body>
+  <h3>Module Pattern</h3>
+
+
+  <script>
+    const products = [
+      { name: 'Samsung s9', price: 3000 },
+      { name: 'Samsung s8', price: 3000 },
+      { name: 'Samsung s7', price: 3000 },
+    ];
+    var ProductController = (function (data) {
+
+      // private members
+      var collections = data || [];
+
+      const addProduct = function (data) {
+        collections.push(data);
+      }
+
+      const removeProduct = function (data) {
+        var index = collections.indexOf(data);
+        if (index >= 0) {
+          collections.splice(index, 1);
+        }
+      }
+
+      const getProducts = function () {
+        return collections;
+      }
+
+      return {
+        // public members
+        addProduct,
+        removeProduct,
+        getProducts
+      }
+    })(products);
+
+    ProductController.addProduct(products[0]);
+    ProductController.addProduct(products[1]);
+    ProductController.removeProduct(products[1]);
+    ProductController.addProduct(products[2]);
+
+    console.log(ProductController.getProducts());
+
+    // module extending
+
+    var extendedModule = (function(module){
+      module.sayHello = function(){
+        console.log('Hello from extended module');
+      }
+      return module;
+    })(ProductController || {})
+
+    extendedModule.sayHello();
+    console.log(extendedModule.getProducts());
+
+  </script>
+
+</body>
+
+</html>
