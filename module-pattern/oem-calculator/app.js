@@ -56,12 +56,18 @@ const ProductController = (function () {
         }
       })
       return product;
+    },
+    setCurrentProduct: function(product){
+      data.selectedProduct = product;
+    },
+    getCurrentProduct: function(){
+      return data.selectedProduct;
     }
   };
 })();
 
 // UI Controller
-const UIController = (function () {
+const UIController = (function (ProductCntrl) {
   const Selectors = {
     productList: "#item-list",
     addBtn: "#addBtn",
@@ -119,8 +125,14 @@ const UIController = (function () {
         total * 8.35
       ).toFixed(2);
     },
+    addSelectedProductToForm: function(){
+      const selectedProduct = ProductCntrl.getCurrentProduct();
+
+      document.querySelector(Selectors.productName).value = selectedProduct.name;
+      document.querySelector(Selectors.productPrice).value = selectedProduct.price;
+    }
   };
-})();
+})(ProductController);
 
 // App Controller
 const App = (function (ProductCtrl, UICtrl) {
@@ -170,8 +182,12 @@ const App = (function (ProductCtrl, UICtrl) {
 
       // get selected product
       const product = ProductCtrl.getProductById(id);
-      console.log(product);
 
+      // set current product
+      ProductCtrl.setCurrentProduct(product);
+
+      // add selected product to form
+      UICtrl.addSelectedProductToForm();
     }
 
     e.preventDefault();
