@@ -13,13 +13,7 @@ const ProductController = (function () {
   }
 
   const data = {
-    products: [
-      { id: 0, name: "Screen", price: 200 },
-      { id: 1, name: "RAM", price: 150 },
-      { id: 2, name: "Keyboard", price: 15 },
-      { id: 3, name: "Mouse", price: 10 },
-      { id: 4, name: "SSD", price: 85 },
-    ],
+    products: [],
     selectedProduct: null,
     total: 0,
   };
@@ -33,6 +27,19 @@ const ProductController = (function () {
     getData: function () {
       return data;
     },
+    addProduct: function (name, price) {
+      let id;
+      if (data.products.length > 0) {
+        id = data.products[data.products.length - 1].id + 1;
+      } else {
+        id = 0;
+      }
+
+      const newProduct = new Product(id, name, parseFloat(price));
+      data.products.push(newProduct);
+
+      return newProduct;
+    },
   };
 })();
 
@@ -40,13 +47,17 @@ const ProductController = (function () {
 const UIController = (function () {
   const Selectors = {
     productList: "#item-list",
+    addBtn: "#addBtn",
+    productName: "#productName",
+    productPrice: "#price",
+    productCard: "#productCard",
   };
 
   return {
-    createProductList: function(products){
+    createProductList: function (products) {
       let html = "";
-      products.forEach(prd => {
-          html += `
+      products.forEach((prd) => {
+        html += `
             <tr>
               <td>${prd.id}</td>
               <td>${prd.name}</td>
@@ -61,27 +72,75 @@ const UIController = (function () {
       });
       document.querySelector(Selectors.productList).innerHTML = html;
     },
-    getSelectors: function(){
+    getSelectors: function () {
       return Selectors;
-    }
+    },
+    addProductToList: function (prd) {
+      document.querySelector(Selectors.productCard).style.display = "block";
+      var item = `
+        <tr>
+          <td>${prd.id}</td>
+          <td>${prd.name}</td>
+          <td>$${prd.price}</td>
+          <td class="text-right">
+          <button type="submit" class="btn btn-outline-warning btn-sm">
+            <i class="far fa-edit"></i>
+          </button>
+          </td>
+        </tr>     
+      `;
+      document.querySelector(Selectors.productList).innerHTML += item;
+    },
+    clearInputs: function () {
+      document.querySelector(Selectors.productName).value = "";
+      document.querySelector(Selectors.productPrice).value = "";
+    },
+    hideProductCard: function (products) {
+      document.querySelector(Selectors.productCard).style.display = "none";
+    },
   };
 })();
 
 // App Controller
 const App = (function (ProductCtrl, UICtrl) {
+  const UISelectors = UICtrl.getSelectors();
 
+  // load event listeners
+  const loadEventListeners = function () {
+    // * addProduct event
+    document
+      .querySelector(UISelectors.addBtn)
+      .addEventListener("click", submitProduct);
+  };
+  const submitProduct = function (e) {
+    const productName = document.querySelector(UISelectors.productName).value;
+    const productPrice = document.querySelector(UISelectors.productPrice).value;
+    if (productName !== "" && productPrice !== "") {
+      // Add product
+      const newProduct = ProductCtrl.addProduct(productName, productPrice);
+      // add to list
+      UICtrl.addProductToList(newProduct);
 
+      // clear inputs
+      UICtrl.clearInputs();
+    }
+
+    e.preventDefault();
+  };
 
   return {
-    init : function(){
-      console.log("starting app...");
+    init: function () {
       const products = ProductCtrl.getProducts();
-      UICtrl.createProductList(products);
-    }
-  }
-})(
-  ProductController,
-  UIController
-);
+
+      if (products.length == 0) {
+        UICtrl.hideProductCard();
+      } else {
+        UICtrl.createProductList(products);
+      }
+      // load event listeners
+      loadEventListeners();
+    },
+  };
+})(ProductController, UIController);
 
 App.init();
