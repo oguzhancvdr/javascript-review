@@ -1,8 +1,52 @@
 // Storage Controller
-const StorageController = (function () {})();
+const StorageController = (function () {
+  return {
+    storeProduct: function (product) {
+      let products;
+      if (localStorage.getItem("products") === null) {
+        products = [];
+        products.push(product);
+      } else {
+        products = JSON.parse(localStorage.getItem("products"));
+        products.push(product);
+      }
+      localStorage.setItem("products", JSON.stringify(products));
+    },
+    getProducts: function () {
+      let products;
+      if (localStorage.getItem("products") === null) {
+        products = [];
+      } else {
+        products = JSON.parse(localStorage.getItem("products"));
+      }
+
+      return products;
+    },
+    updateProduct: function (product) {
+      let products = JSON.parse(localStorage.getItem("products"));
+      products.forEach(function (prd, i) {
+        if (product.id == prd.id) {
+          products.splice(i, 1, product);
+        }
+      });
+
+      localStorage.setItem('products', JSON.stringify(products))
+    },
+    deleteProduct : function(id){
+      let products = JSON.parse(localStorage.getItem("products"));
+      products.forEach(function (prd, i) {
+        if (id == prd.id) {
+          products.splice(i, 1);
+        }
+      });
+
+      localStorage.setItem("products", JSON.stringify(products));
+    }
+  };
+})();
 
 // Product Controller
-const ProductController = (function () {
+const ProductController = (function (StorageCntrl) {
   // * private
   class Product {
     constructor(id, name, price) {
@@ -13,7 +57,7 @@ const ProductController = (function () {
   }
 
   const data = {
-    products: [],
+    products: StorageCntrl.getProducts(),
     selectedProduct: null,
     total: 0,
   };
@@ -83,7 +127,7 @@ const ProductController = (function () {
       return data.selectedProduct;
     },
   };
-})();
+})(StorageController);
 
 // UI Controller
 const UIController = (function (ProductCntrl) {
@@ -151,6 +195,7 @@ const UIController = (function (ProductCntrl) {
       document.querySelector(Selectors.productCard).style.display = "none";
     },
     showTotal: function (total) {
+      console.log(total);
       document.querySelector(Selectors.totalDollar).textContent = total;
       document.querySelector(Selectors.totalTL).textContent = (
         total * 8.35
@@ -205,7 +250,7 @@ const UIController = (function (ProductCntrl) {
 })(ProductController);
 
 // App Controller
-const App = (function (ProductCtrl, UICtrl) {
+const App = (function (ProductCtrl, UICtrl, StorageCtrl) {
   const UISelectors = UICtrl.getSelectors();
 
   // load event listeners
@@ -245,6 +290,9 @@ const App = (function (ProductCtrl, UICtrl) {
 
       // add to list
       UICtrl.addProductToList(newProduct);
+
+      // add product to localstorage
+      StorageCtrl.storeProduct(newProduct);
 
       // get total
       const total = ProductCtrl.getTotal();
@@ -303,6 +351,9 @@ const App = (function (ProductCtrl, UICtrl) {
       //* show total
       UICtrl.showTotal(total);
 
+      //* update storage
+      StorageCtrl.updateProduct(updatedProduct);
+
       //* clear
       UICtrl.addingState();
     }
@@ -332,6 +383,9 @@ const App = (function (ProductCtrl, UICtrl) {
     // show total
     UICtrl.showTotal(total);
 
+    // delete from storage
+    StorageCtrl.deleteProduct(selectedProduct.id);
+
     // clear
     UICtrl.addingState();
 
@@ -351,11 +405,16 @@ const App = (function (ProductCtrl, UICtrl) {
         UICtrl.hideProductCard();
       } else {
         UICtrl.createProductList(products);
+        
+        // get total
+        const total = ProductCtrl.getTotal();
+        // show total
+        UICtrl.showTotal(total);
       }
       // load event listeners
       loadEventListeners();
     },
   };
-})(ProductController, UIController);
+})(ProductController, UIController, StorageController);
 
 App.init();
