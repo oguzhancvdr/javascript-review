@@ -39,6 +39,18 @@ const ProductController = (function () {
 
       return newProduct;
     },
+    updateProduct: function (name, price) {
+      let product = null;
+      data.products.forEach(function (prd) {
+        if (prd.id == data.selectedProduct.id) {
+          prd.name = name;
+          prd.price = parseFloat(price);
+          product = prd;
+        }
+      });
+
+      return product;
+    },
     getTotal: function () {
       let total = 0;
       data.products.forEach(function (item) {
@@ -48,21 +60,21 @@ const ProductController = (function () {
       data.total = total;
       return data.total;
     },
-    getProductById : function(id){
+    getProductById: function (id) {
       let product = null;
-      data.products.forEach(function(prd){
-        if(prd.id == id){
+      data.products.forEach(function (prd) {
+        if (prd.id == id) {
           product = prd;
         }
-      })
+      });
       return product;
     },
-    setCurrentProduct: function(product){
+    setCurrentProduct: function (product) {
       data.selectedProduct = product;
     },
-    getCurrentProduct: function(){
+    getCurrentProduct: function () {
       return data.selectedProduct;
-    }
+    },
   };
 })();
 
@@ -70,6 +82,7 @@ const ProductController = (function () {
 const UIController = (function (ProductCntrl) {
   const Selectors = {
     productList: "#item-list",
+    productListItems: "#item-list tr",
     addBtn: "#addBtn",
     updateBtn: "#updateBtn",
     cancelBtn: "#cancelBtn",
@@ -128,30 +141,49 @@ const UIController = (function (ProductCntrl) {
         total * 8.35
       ).toFixed(2);
     },
-    addSelectedProductToForm: function(){
+    addSelectedProductToForm: function () {
       const selectedProduct = ProductCntrl.getCurrentProduct();
 
-      document.querySelector(Selectors.productName).value = selectedProduct.name;
-      document.querySelector(Selectors.productPrice).value = selectedProduct.price;
+      document.querySelector(Selectors.productName).value =
+        selectedProduct.name;
+      document.querySelector(Selectors.productPrice).value =
+        selectedProduct.price;
     },
-    addingState: function(){
+    addingState: function (item) {
+      if(item){
+        item.classList.remove('bg-warning', 'text-white');
+      }
       this.clearInputs();
       document.querySelector(Selectors.addBtn).style.display = "inline";
       document.querySelector(Selectors.updateBtn).style.display = "none";
       document.querySelector(Selectors.cancelBtn).style.display = "none";
       document.querySelector(Selectors.deleteBtn).style.display = "none";
     },
-    editState: function(tr){
+    editState: function (tr) {
       const parent = tr.parentNode;
-      for(let i=0; i<parent.children.length; i++){
+      for (let i = 0; i < parent.children.length; i++) {
         parent.children[i].classList.remove("bg-warning", "text-white");
       }
-      tr.classList.add('bg-warning', 'text-white');
+      tr.classList.add("bg-warning", "text-white");
       document.querySelector(Selectors.addBtn).style.display = "none";
       document.querySelector(Selectors.updateBtn).style.display = "inline";
       document.querySelector(Selectors.cancelBtn).style.display = "inline";
       document.querySelector(Selectors.deleteBtn).style.display = "inline";
-    }
+    },
+    updateProduct: function (prd) {
+      let updatedItem = null;
+
+      let items = document.querySelectorAll(Selectors.productListItems);
+      items.forEach(function (item) {
+        if (item.classList.contains("bg-warning")) {
+          item.children[1].textContent = prd.name;
+          item.children[2].textContent = "$"+prd.price;
+          updatedItem = item;
+        }
+      });
+
+      return updatedItem;
+    },
   };
 })(ProductController);
 
@@ -170,6 +202,11 @@ const App = (function (ProductCtrl, UICtrl) {
     document
       .querySelector(UISelectors.productList)
       .addEventListener("click", editProduct);
+
+    //* edit product submit
+    document
+      .querySelector(UISelectors.updateBtn)
+      .addEventListener("click", saveChanges);
   };
 
   const submitProduct = function (e) {
@@ -187,7 +224,7 @@ const App = (function (ProductCtrl, UICtrl) {
 
       // show total
       UICtrl.showTotal(total);
-      
+
       // clear inputs
       UICtrl.clearInputs();
     }
@@ -213,6 +250,33 @@ const App = (function (ProductCtrl, UICtrl) {
       UICtrl.editState(e.target.parentNode.parentNode);
     }
 
+    e.preventDefault();
+  };
+
+  const saveChanges = function (e) {
+    const productName = document.querySelector(UISelectors.productName).value;
+    const productPrice = document.querySelector(UISelectors.productPrice).value;
+
+    if (productName !== "" && productPrice !== "") {
+      //* update product
+      const updatedProduct = ProductCtrl.updateProduct(
+        productName,
+        productPrice
+      );
+
+      //* update ui
+      let item = UICtrl.updateProduct(updatedProduct);
+
+      //* get total
+      const total = ProductCtrl.getTotal();
+
+      //* show total
+      UICtrl.showTotal(total);
+
+      //* clear
+      UICtrl.addingState(item);
+
+    }
     e.preventDefault();
   };
 
