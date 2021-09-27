@@ -23,7 +23,6 @@ const ProductController = (function () {
     getProducts: function () {
       return data.products;
     },
-
     getData: function () {
       return data;
     },
@@ -40,6 +39,15 @@ const ProductController = (function () {
 
       return newProduct;
     },
+    getTotal: function(){
+      let total = 0;
+      data.products.forEach(function(item){
+        total += item.price;
+      })
+
+      data.total = total;
+      return data.total;
+    }
   };
 })();
 
@@ -51,6 +59,8 @@ const UIController = (function () {
     productName: "#productName",
     productPrice: "#price",
     productCard: "#productCard",
+    totalTL: "#total-tl",
+    totalDollar: "#total-dollar",
   };
 
   return {
@@ -95,9 +105,13 @@ const UIController = (function () {
       document.querySelector(Selectors.productName).value = "";
       document.querySelector(Selectors.productPrice).value = "";
     },
-    hideProductCard: function (products) {
+    hideProductCard: function () {
       document.querySelector(Selectors.productCard).style.display = "none";
     },
+    showTotal: function(total){
+      document.querySelector(Selectors.totalDollar).textContent = total;
+      document.querySelector(Selectors.totalTL).textContent = (total * 8.35).toFixed(2);
+    }
   };
 })();
 
@@ -118,8 +132,15 @@ const App = (function (ProductCtrl, UICtrl) {
     if (productName !== "" && productPrice !== "") {
       // Add product
       const newProduct = ProductCtrl.addProduct(productName, productPrice);
+
       // add to list
       UICtrl.addProductToList(newProduct);
+
+      // get total
+      const total = ProductCtrl.getTotal();
+
+      // show total
+      UICtrl.showTotal(total);
 
       // clear inputs
       UICtrl.clearInputs();
