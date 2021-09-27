@@ -51,6 +51,13 @@ const ProductController = (function () {
 
       return product;
     },
+    deleteProduct: function (product) {
+      data.products.forEach(function (prd, i) {
+        if (prd.id == product.id) {
+          data.products.splice(i, 1);
+        }
+      });
+    },
     getTotal: function () {
       let total = 0;
       data.products.forEach(function (item) {
@@ -132,13 +139,13 @@ const UIController = (function (ProductCntrl) {
       document.querySelector(Selectors.productName).value = "";
       document.querySelector(Selectors.productPrice).value = "";
     },
-    clearWarnings: function(){
+    clearWarnings: function () {
       const items = document.querySelectorAll(Selectors.productListItems);
-      items.forEach(function(item){
-        if(item.classList.contains('bg-warning')){
+      items.forEach(function (item) {
+        if (item.classList.contains("bg-warning")) {
           item.classList.remove("bg-warning", "text-white");
         }
-      })
+      });
     },
     hideProductCard: function () {
       document.querySelector(Selectors.productCard).style.display = "none";
@@ -186,6 +193,14 @@ const UIController = (function (ProductCntrl) {
 
       return updatedItem;
     },
+    deleteProduct: function () {
+      let items = document.querySelectorAll(Selectors.productListItems);
+      items.forEach(function (item) {
+        if (item.classList.contains("bg-warning")) {
+          item.remove();
+        }
+      });
+    },
   };
 })(ProductController);
 
@@ -210,10 +225,15 @@ const App = (function (ProductCtrl, UICtrl) {
       .querySelector(UISelectors.updateBtn)
       .addEventListener("click", saveChanges);
 
-    //* cancel bıtton click
+    //* cancel button click
     document
       .querySelector(UISelectors.cancelBtn)
       .addEventListener("click", onCancelUpdate);
+
+    //* delete product
+    document
+      .querySelector(UISelectors.deleteBtn)
+      .addEventListener("click", onDelete);
   };
 
   const submitProduct = function (e) {
@@ -251,6 +271,9 @@ const App = (function (ProductCtrl, UICtrl) {
       // set current product
       ProductCtrl.setCurrentProduct(product);
 
+      // clear warnings
+      UICtrl.clearWarnings();
+
       // add selected product to form
       UICtrl.addSelectedProductToForm();
 
@@ -272,7 +295,7 @@ const App = (function (ProductCtrl, UICtrl) {
       );
 
       //* update ui
-      let item = UICtrl.updateProduct(updatedProduct);
+      UICtrl.updateProduct(updatedProduct);
 
       //* get total
       const total = ProductCtrl.getTotal();
@@ -286,12 +309,38 @@ const App = (function (ProductCtrl, UICtrl) {
     e.preventDefault();
   };
 
-  const onCancelUpdate = function(e){
+  const onCancelUpdate = function (e) {
     UICtrl.addingState();
     UICtrl.clearWarnings();
 
-    e.preventDefault()
-  }
+    e.preventDefault();
+  };
+
+  const onDelete = function (e) {
+    // get selected product
+    const selectedProduct = ProductCtrl.getCurrentProduct();
+
+    // delete product
+    ProductCtrl.deleteProduct(selectedProduct);
+
+    // delete product from ui
+    UICtrl.deleteProduct();
+
+    // get total
+    const total = ProductCtrl.getTotal();
+
+    // show total
+    UICtrl.showTotal(total);
+
+    // clear
+    UICtrl.addingState();
+
+    if (total == 0) {
+      UICtrl.hideProductCard();
+    }
+
+    e.preventDefault();
+  };
 
   return {
     init: function () {
