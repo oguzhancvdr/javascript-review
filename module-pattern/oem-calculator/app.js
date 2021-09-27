@@ -132,6 +132,14 @@ const UIController = (function (ProductCntrl) {
       document.querySelector(Selectors.productName).value = "";
       document.querySelector(Selectors.productPrice).value = "";
     },
+    clearWarnings: function(){
+      const items = document.querySelectorAll(Selectors.productListItems);
+      items.forEach(function(item){
+        if(item.classList.contains('bg-warning')){
+          item.classList.remove("bg-warning", "text-white");
+        }
+      })
+    },
     hideProductCard: function () {
       document.querySelector(Selectors.productCard).style.display = "none";
     },
@@ -149,10 +157,8 @@ const UIController = (function (ProductCntrl) {
       document.querySelector(Selectors.productPrice).value =
         selectedProduct.price;
     },
-    addingState: function (item) {
-      if(item){
-        item.classList.remove('bg-warning', 'text-white');
-      }
+    addingState: function () {
+      this.clearWarnings();
       this.clearInputs();
       document.querySelector(Selectors.addBtn).style.display = "inline";
       document.querySelector(Selectors.updateBtn).style.display = "none";
@@ -160,10 +166,6 @@ const UIController = (function (ProductCntrl) {
       document.querySelector(Selectors.deleteBtn).style.display = "none";
     },
     editState: function (tr) {
-      const parent = tr.parentNode;
-      for (let i = 0; i < parent.children.length; i++) {
-        parent.children[i].classList.remove("bg-warning", "text-white");
-      }
       tr.classList.add("bg-warning", "text-white");
       document.querySelector(Selectors.addBtn).style.display = "none";
       document.querySelector(Selectors.updateBtn).style.display = "inline";
@@ -177,7 +179,7 @@ const UIController = (function (ProductCntrl) {
       items.forEach(function (item) {
         if (item.classList.contains("bg-warning")) {
           item.children[1].textContent = prd.name;
-          item.children[2].textContent = "$"+prd.price;
+          item.children[2].textContent = "$" + prd.price;
           updatedItem = item;
         }
       });
@@ -207,6 +209,11 @@ const App = (function (ProductCtrl, UICtrl) {
     document
       .querySelector(UISelectors.updateBtn)
       .addEventListener("click", saveChanges);
+
+    //* cancel bıtton click
+    document
+      .querySelector(UISelectors.cancelBtn)
+      .addEventListener("click", onCancelUpdate);
   };
 
   const submitProduct = function (e) {
@@ -274,11 +281,17 @@ const App = (function (ProductCtrl, UICtrl) {
       UICtrl.showTotal(total);
 
       //* clear
-      UICtrl.addingState(item);
-
+      UICtrl.addingState();
     }
     e.preventDefault();
   };
+
+  const onCancelUpdate = function(e){
+    UICtrl.addingState();
+    UICtrl.clearWarnings();
+
+    e.preventDefault()
+  }
 
   return {
     init: function () {
