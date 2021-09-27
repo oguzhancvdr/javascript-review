@@ -71,6 +71,9 @@ const UIController = (function (ProductCntrl) {
   const Selectors = {
     productList: "#item-list",
     addBtn: "#addBtn",
+    updateBtn: "#updateBtn",
+    cancelBtn: "#cancelBtn",
+    deleteBtn: "#deleteBtn",
     productName: "#productName",
     productPrice: "#price",
     productCard: "#productCard",
@@ -130,6 +133,24 @@ const UIController = (function (ProductCntrl) {
 
       document.querySelector(Selectors.productName).value = selectedProduct.name;
       document.querySelector(Selectors.productPrice).value = selectedProduct.price;
+    },
+    addingState: function(){
+      this.clearInputs();
+      document.querySelector(Selectors.addBtn).style.display = "inline";
+      document.querySelector(Selectors.updateBtn).style.display = "none";
+      document.querySelector(Selectors.cancelBtn).style.display = "none";
+      document.querySelector(Selectors.deleteBtn).style.display = "none";
+    },
+    editState: function(tr){
+      const parent = tr.parentNode;
+      for(let i=0; i<parent.children.length; i++){
+        parent.children[i].classList.remove("bg-warning", "text-white");
+      }
+      tr.classList.add('bg-warning', 'text-white');
+      document.querySelector(Selectors.addBtn).style.display = "none";
+      document.querySelector(Selectors.updateBtn).style.display = "inline";
+      document.querySelector(Selectors.cancelBtn).style.display = "inline";
+      document.querySelector(Selectors.deleteBtn).style.display = "inline";
     }
   };
 })(ProductController);
@@ -166,7 +187,7 @@ const App = (function (ProductCtrl, UICtrl) {
 
       // show total
       UICtrl.showTotal(total);
-
+      
       // clear inputs
       UICtrl.clearInputs();
     }
@@ -188,6 +209,8 @@ const App = (function (ProductCtrl, UICtrl) {
 
       // add selected product to form
       UICtrl.addSelectedProductToForm();
+
+      UICtrl.editState(e.target.parentNode.parentNode);
     }
 
     e.preventDefault();
@@ -195,6 +218,7 @@ const App = (function (ProductCtrl, UICtrl) {
 
   return {
     init: function () {
+      UICtrl.addingState();
       const products = ProductCtrl.getProducts();
 
       if (products.length == 0) {

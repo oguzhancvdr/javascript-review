@@ -7,8 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <script src="https://kit.fontawesome.com/8e65775419.js" crossorigin="anonymous"></script>
 
   <title>OEM Calculator</title>
@@ -36,13 +35,13 @@
           <button id="addBtn" type="submit" class="btn btn-success btn-sm">
             <i class="fas fa-plus mr-1"></i>Add
           </button>
-          <button type="submit" class="btn btn-info btn-sm">
+          <button id="updateBtn" type="submit" class="btn btn-info btn-sm">
             <i class="far fa-edit mr-1"></i>Save Changes
           </button>
-          <button type="submit" class="btn btn-danger btn-sm">
+          <button id="deleteBtn" type="submit" class="btn btn-danger btn-sm">
             <i class="fas fa-times mr-1"></i>Delete
           </button>
-          <button type="submit" class="btn btn-secondary btn-sm">
+          <button id="cancelBtn" type="submit" class="btn btn-secondary btn-sm">
             <i class="fas fa-arrow-circle-left mr-1"></i>Cancel
           </button>
         </form>
@@ -55,24 +54,18 @@
     </div>
     <div class="card mt-3">
       <div class="card-footer text-right">
-        <p>Total (TL) <strong><span id="total-tl">835</span>TL</strong></p>
-        <p>Total ($) <strong>$<span id="total-dollar">100</span></strong></p>
+        <p>Total (TL) <strong><span id="total-tl">0</span>TL</strong></p>
+        <p>Total ($) <strong>$<span id="total-dollar">0</span></strong></p>
       </div>
     </div>
   </div>
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-    integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-    crossorigin="anonymous"></script>
-    <script src="app.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  <script src="app.js"></script>
 </body>
 
 </html>
