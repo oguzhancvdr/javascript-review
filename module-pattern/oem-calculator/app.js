@@ -17,6 +17,8 @@ const ProductController = (function () {
       { id: 0, name: "Screen", price: 200 },
       { id: 1, name: "RAM", price: 150 },
       { id: 2, name: "Keyboard", price: 15 },
+      { id: 3, name: "Mouse", price: 10 },
+      { id: 4, name: "SSD", price: 85 },
     ],
     selectedProduct: null,
     total: 0,
@@ -35,7 +37,35 @@ const ProductController = (function () {
 })();
 
 // UI Controller
-const UIController = (function () {})();
+const UIController = (function () {
+  const Selectors = {
+    productList: "#item-list",
+  };
+
+  return {
+    createProductList: function(products){
+      let html = "";
+      products.forEach(prd => {
+          html += `
+            <tr>
+              <td>${prd.id}</td>
+              <td>${prd.name}</td>
+              <td>$${prd.price}</td>
+              <td class="text-right">
+                <button type="submit" class="btn btn-outline-warning btn-sm">
+                  <i class="far fa-edit"></i>
+                </button>
+              </td>
+            </tr>          
+          `;
+      });
+      document.querySelector(Selectors.productList).innerHTML = html;
+    },
+    getSelectors: function(){
+      return Selectors;
+    }
+  };
+})();
 
 // App Controller
 const App = (function (ProductCtrl, UICtrl) {
@@ -46,7 +76,7 @@ const App = (function (ProductCtrl, UICtrl) {
     init : function(){
       console.log("starting app...");
       const products = ProductCtrl.getProducts();
-      // UICtrl.createProductList(products);
+      UICtrl.createProductList(products);
     }
   }
 })(
