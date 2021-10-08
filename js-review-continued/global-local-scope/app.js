@@ -57,9 +57,34 @@ if (true) {
 {
   const name_ = 'john'
   const special = 'special'
-
 }
-console.log(special); // it throws an exception that is ReferenceError
+// console.log(special); // it throws an exception that is ReferenceError
 // we can not acces local variable which is declareded by const or let
 
 console.log(`my name is ${name_} and I'm perfect :P`)
+
+console.log('********Variable Lookup*******')
+
+// Variable lookup
+// {} - code block
+
+const globalNumber = 5
+
+function add(num1, num2) {
+  const globalNumber = 10
+  // javascript firstly checks if globalNumber is in the local scope ?
+  // if not it will check global scope
+  const result = num1 + num2 + globalNumber
+  function multiply() {
+    const globalNumber = 100
+    // js will check is globalNumber is in my local scope ?
+    // if not, js will check to upper func's localscope ?
+    // if it has not also such a variable then will check global scope
+    const multiplyResult = result * globalNumber
+    console.log(multiplyResult)
+  }
+  multiply()
+  return result
+}
+
+console.log(add(3, 4))
