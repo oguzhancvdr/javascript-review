@@ -15,7 +15,8 @@ btn.addEventListener('click', function (event) {
   heading.classList.remove('blue')
 })
 
-link.addEventListener('click', function (event) {
+link.addEventListener('click', (event) => {
   event.preventDefault()
   console.log('event.type :>> ', event.type)
+  console.log('this :>> ', this);
 })
