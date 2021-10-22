@@ -9,6 +9,7 @@ console.log({easyValue, value})
 // getAttribute()
 // setAttribute()
 
+
 const first = document.querySelector('.first')
 const classValue = first.getAttribute('class')
 const id = first.getAttribute('id')
