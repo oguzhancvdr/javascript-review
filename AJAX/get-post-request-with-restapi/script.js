@@ -8,7 +8,7 @@ const postDataBtn = document.querySelector("#postData");
 function getOne() {
   const id = postInput.value;
   loading.style.display = "block";
-  const url = "https://jsonplaceholder.typicode.com/posts/" + (id ? id : 1);
+  const url = `https://jsonplaceholder.typicode.com/posts/${id ? id : 1}`;
   const xhr = new XMLHttpRequest();
   xhr.open("GET", url, true);
   xhr.onload = function () {

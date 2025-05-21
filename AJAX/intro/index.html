@@ -81,13 +81,14 @@
       }
     }
 
-    // second this line is executed when you uwant to show loading spinner
+    // second this line is executed when you want to show loading spinner
     xhr.onprogress = function () {
       console.log("on progressing...");
     }
 
     // third. true means requests are async and bestpractice
-    xhr.open('GET', 'msg.txt', true); xhr.send();
+    xhr.open('GET', 'msg.txt', true); 
+    xhr.send();
 
     // first
     console.log('hello');
