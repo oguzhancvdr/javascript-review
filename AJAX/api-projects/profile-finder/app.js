@@ -5,16 +5,27 @@ const searchProfile = document.querySelector("#searchProfile");
 searchProfile.addEventListener("keyup", (e) => {
   ui.clear();
   let text = e.target.value;
+
   if (text) {
-    profile.getProfile(text)
-    .then((res) => {
-      if (res.profile.length > 0) {
-        ui.showProfile(res.profile[0]);
-        ui.showTodoList(res.todo);
-      } else {
-        ui.showAlert(text);
+    profile._debounce(async () => {
+      // perform the search
+      try {
+        profile
+          .getProfile(text)
+          .then((res) => {
+            if (res.profile.name) {
+              ui.showProfile(res.profile);
+              ui.showTodoList(res.todo);
+            } else {
+              throw Error(text);
+            }
+          })
+          .catch((err) => {
+            ui.showAlert(err?.message);
+          });
+      } catch (error) {
+        ui.showAlert(error?.message);
       }
-    })
-    .catch(() => ui.showAlert(text))
+    }, 500);
   }
 });
