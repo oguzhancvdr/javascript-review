@@ -22,8 +22,8 @@ val();
 
 // basic exampe
 
-function newAccount(name, initialBlance) {
-  let balance = initialBlance;
+function newAccount(name, initialBalance) {
+  let balance = initialBalance;
   function showBalance() {
     console.log(`Hello ${name}, your balance is ${balance}`);
   }
@@ -43,8 +43,8 @@ obi();
 
 // complete example
 
-function newAccountComplete(name, initialBlance) {
-  let balance = initialBlance;
+function newAccountComplete(name, initialBalance) {
+  let balance = initialBalance;
   function showBalanceComplete() {
     console.log(`Hello ${name}, your balance is ${balance}`);
   }

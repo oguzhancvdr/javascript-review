@@ -62,7 +62,7 @@ console.log(names)
 console.log('**************************************************')
 
 // * filter
-// ! does not return a new array
+// ! does return a new array
 // ? can manipulate the size of new array
 // ? returns based on condition
 
